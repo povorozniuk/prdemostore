@@ -29,6 +29,7 @@ public class ReviewsTest extends AbstractTestNGSpringContextTests {
 
 	@Autowired
 	BaseClass baseClass;
+
 	private static boolean buttonNextIsDisplayed;
 	private int count;
 	private int pageNumber;

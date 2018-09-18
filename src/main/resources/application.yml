@@ -1,0 +1,16 @@
+spring:
+  profiles.active: test
+
+---
+spring:
+  profiles: test
+
+url:
+  demo-store-base-url: "https://www.prdemostore.com/"
+  products: "products/"
+  womens-fleet-jacket: "womens-fleet-jacket/"
+selenium:
+  browser: "Chrome"
+  driverName: "chromedriver.exe"
+
+---

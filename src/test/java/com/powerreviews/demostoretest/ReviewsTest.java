@@ -48,7 +48,7 @@ public class ReviewsTest extends AbstractTestNGSpringContextTests {
 		int numberOfArticles = allArticles.size();
 		String numberOfReviews = baseClass.ui.driver().findElement(By.xpath("//*[@class=\"pr-snippet-review-count\"]")).getText();
 		log.info("Expecting " + numberOfReviews);
-		log.info("Found: " + allArticles.size() + " Reviews on ");
+		log.info("Found: " + allArticles.size() + " Reviews");
 		log.info("Scanned: " + pageNumber + " pages total");
 		Assertions.assertThat(numberOfReviews).contains(String.valueOf(numberOfArticles));
 	}
@@ -70,18 +70,21 @@ public class ReviewsTest extends AbstractTestNGSpringContextTests {
 			for (Element article : currentArticles) {
 				allArticles.add(article);
 			}
-			log.info("Added " + currentArticles.size() + " from page: " + pageNumber);
+			log.info("Added " + currentArticles.size() + " reviews from page: " + pageNumber);
 			if (buttonNextIsDisplayed) {
 				previousValue = baseClass.ui.driver().findElement(By.xpath("//*[@class=\"pr-rd-review-position\"]/span[2]")).getText();
 				baseClass.ui.driver().findElement(By.xpath("//button[@aria-label=\"Next\"]")).click();
 
-				for (int i = 1; i < 5; i++) {
+				int maxAmountOfAttempts = 5;
+				for (int i = 1; i < maxAmountOfAttempts; i++) {
 					boolean sucessfulChangeOfThePage;
 					boolean valueIsChanged = didTextChangeByXpath(previousValue, "//*[@class=\"pr-rd-review-position\"]/span[2]");
 					if (valueIsChanged == true) {
 						sucessfulChangeOfThePage = true;
 						break;
 					} else {
+						log.error("Couldn't click button 'Next' to switch the page. Attempt: " + i + " out of " + maxAmountOfAttempts);
+						log.error("Waiting for 3 seconds");
 						sucessfulChangeOfThePage = false;
 						sleep(3000);
 					}
